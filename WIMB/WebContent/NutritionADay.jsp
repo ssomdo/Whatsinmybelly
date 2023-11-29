@@ -15,7 +15,31 @@ String cp = request.getContextPath();
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/js/bootstrap.js"></script>
+<style>
+/* 스타일링을 위한 CSS 코드 */
+.calendar {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 400px;
+    margin: 20px auto;
+}
 
+.day {
+    width: calc(100% / 7);
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.prev, .next {
+    cursor: pointer;
+    padding: 8px;
+    background-color: #4CAF50;
+    color: #fff;
+    margin: 10px 0;
+}
+</style>
 
 
 </head>
@@ -100,14 +124,17 @@ String cp = request.getContextPath();
 								확인해보세요!</h6>
 						</div>
 						<!-- 달력자리 -->
-						<svg xmlns="http://www.w3.org/2000/svg"
-							class="d-block user-select-none" width="100%" height="200"
-							aria-label="Placeholder: Image cap" focusable="false" role="img"
-							preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180"
-							style="font-size: 1.125rem; text-anchor: middle">
-				    <rect width="100%" height="100%" fill="#868e96"></rect>
-				    <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-				    </svg>
+						<div class="calendar">
+							<c:forEach var="day" begin="1" end="3" step="1">
+								<div class="day"></div>
+							</c:forEach>
+							<c:forEach var="day" begin="1" end="30" step="1">
+								<div class="day">${day}</div>
+							</c:forEach>
+							<c:forEach var="day" begin="1" end="2" step="1">
+								<div class="day"></div>
+							</c:forEach>
+						</div>
 						<div class="card-body">
 							<p class="card-text">Some quick example text to build on the
 								card title and make up the bulk of the card's content.</p>
