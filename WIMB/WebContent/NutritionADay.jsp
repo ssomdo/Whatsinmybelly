@@ -20,7 +20,8 @@ String cp = request.getContextPath();
 .calendar {
     display: flex;
     flex-wrap: wrap;
-    max-width: 400px;
+    max-width: 600px;
+    height: 440px;
     margin: 20px auto;
 }
 
@@ -41,156 +42,127 @@ String cp = request.getContextPath();
 }
 </style>
 
+<script type="text/javascript">
+// 모달 버튼에 이벤트를 건다.  
+$('#joinBtn').on('click', function()
+{
+	$('#joinModal').modal('show');
+});
+// 모달 안의 취소 버튼에 이벤트를 건다.  
+$('#closeModalBtn').on('click', function()
+{
+	$('#joinModal').modal('hide');
+});
+
+//모달 버튼에 이벤트를 건다.  
+$('#infoSearchBtn').on('click', function()
+{
+	$('#infoSearchModal').modal('show');
+});
+// 모달 안의 취소 버튼에 이벤트를 건다.  
+$('#closeSearchModalBtn').on('click', function()
+{
+	$('#infoSearchModal').modal('hide');
+});
+</script>
 
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg bg-body-tertiary">
+	<nav class="navbar navbar-expand-lg bg-body-tertiary mb-2">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#"><img src="image/wimb_logo.png"
-				style="max-width: 100px;"></a>
+				style="max-width: 90px;"></a>
+			<div class="d-flex">
+				<div class="collapse navbar-collapse" id="navbarColor04">
+					<form class="row d-flex justify-content-end">
+						<div class="col-md-7 p-0">
+							<div class="d-flex">
+								<input class="form-control me-sm-2" type="search" placeholder="ID">
+								<input class="form-control me-sm-2" type="search" placeholder="PW">
+							</div>
+						</div>
+						<div class="col-md-4 p-0 me-2">
+							<div class="d-flex">
+								<button class="btn btn-primary my-0 my-sm-0" type="submit">LOGIN</button>
+								<!-- 회원가입 -->						
+								<button type="button" class="btn btn-primary ms-1 my-2 my-sm-0"
+									id="joinBtn" data-bs-toggle="modal"
+									data-bs-target="#joinModal">JOIN</button>
+								<!-- 정보수정 -->
+								<button type="button" class="btn btn-primary p-1 ms-1 my-2 my-sm-0"
+									id="infoSearchBtn" data-bs-toggle="modal"
+									data-bs-target="#infoSearchModal"><small>정보찾기</small></button>
+							</div>
+						</div>
+					</form>
+					<div>
+						<c:import url="join_modal.jsp"></c:import>
+					</div>
+					<div>
+						<c:import url="info_search_modal.jsp"></c:import>
+					</div>
+				</div>
+			</div>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarColor04"
 				aria-controls="navbarColor04" aria-expanded="false"
 				aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			<div class="d-flex">
-				<div class="collapse navbar-collapse" id="navbarColor04">
-					<form class="d-flex">
-						<input class="form-control me-sm-2" type="search" placeholder="ID">
-						<input class="form-control me-sm-2" type="search" placeholder="PW">
-						<button class="btn btn-primary my-2 my-sm-0" type="submit">LOGIN</button>
-						<!-- 	<button class="btn btn-primary ms-1 my-2 my-sm-0" type="submit">JOIN</button> -->
-						<button type="button" class="btn btn-primary ms-1 my-2 my-sm-0"
-							id="joinBtn" data-bs-toggle="modal"
-							data-bs-target="#staticBackdrop">JOIN</button>
-
-						<div class="modal fade" id="staticBackdrop"
-							data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-							aria-labelledby="staticBackdropLabel" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title" id="staticBackdropLabel">Modal
-											title</h5>
-										<button type="button" class="btn-close"
-											data-bs-dismiss="modal" aria-label="Close"></button>
-									</div>
-									<div class="modal-body">
-										<h5>필수사항</h5>
-										<div class="form-group">
-											<label class="col-form-label mt-4" for="inputDefault">사용자 이름</label>
-											<input type="text" class="form-control" placeholder="사용자이름"
-												id="inputDefault">
-										</div>
-										<div class="form-group">
-											<label class="col-form-label mt-4" for="inputDefault">아이디</label>
-											<input type="text" class="form-control" placeholder="ID"
-												id="inputDefault">
-										</div>
-										<div class="form-group">
-											<label for="exampleInputPassword1" class="form-label mt-4">비밀번호</label>
-											<input type="password" class="form-control"
-												id="exampleInputPassword1" placeholder="Password"
-												autocomplete="off">
-										</div>
-										<div class="form-group">
-											<label for="exampleInputPassword1" class="form-label mt-4">비밀번호확인</label>
-											<input type="password" class="form-control"
-												id="exampleInputPassword1" placeholder="Password"
-												autocomplete="off">
-										</div>
-										<br>
-										<hr>
-										<h5>선택사항</h5>
-										<div class="form-group">
-											<label class="col-form-label mt-4" for="inputDefault">사용자 설정 일일 총 칼로리</label>
-											<input type="text" class="form-control" placeholder="kcal"
-												id="inputDefault">
-										</div>
-										<br>
-										<br>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary"
-												data-bs-dismiss="modal" id="closeModalBtn">취소</button>
-										<button type="button" id="joinCompleteBtn" class="btn btn-primary">회원가입</button>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<script>
-							// 모달 버튼에 이벤트를 건다.  
-							$('#joinBtn').on('click', function()
-							{
-								alert("모달");
-								$('#staticBackdrop').modal('show');
-							});
-							// 모달 안의 취소 버튼에 이벤트를 건다.  
-							$('#closeModalBtn').on('click', function()
-							{
-								$('#staticBackdrop').modal('hide');
-							});
-						</script>
-					</form>
-				</div>
-			</div>
 		</div>
 	</nav>
-	<br>
+	
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-4">
+			<div class="col-md-5 p-0">
 				<div class="container-fluid">
 					<div class="card mb-3">
 						<h3 class="card-header">2023.11</h3>
-						<div class="card-body">
+						<div class="card-body p-2">
 							<h5 class="card-title">한달 하루 영양 달력</h5>
 							<h6 class="card-subtitle text-muted">날짜를 클릭하여 하루를 채우고
 								확인해보세요!</h6>
 						</div>
-						<!-- 달력자리 -->
-						<div class="calendar">
-							<c:forEach var="day" begin="1" end="3" step="1">
-								<div class="day"></div>
-							</c:forEach>
-							<c:forEach var="day" begin="1" end="30" step="1">
-								<div class="day">${day}</div>
-							</c:forEach>
-							<c:forEach var="day" begin="1" end="2" step="1">
-								<div class="day"></div>
-							</c:forEach>
-						</div>
-						<div class="card-body">
-							<p class="card-text">Some quick example text to build on the
-								card title and make up the bulk of the card's content.</p>
+						<div class="card-body p-0">
+							<!-- 달력자리 -->
+							<div class="calendar">
+								<c:forEach var="day" begin="1" end="3" step="1">
+									<div class="day"></div>
+								</c:forEach>
+								<c:forEach var="day" begin="1" end="30" step="1">
+									<div class="day">${day}</div>
+								</c:forEach>
+								<c:forEach var="day" begin="1" end="2" step="1">
+									<div class="day"></div>
+								</c:forEach>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-8">
+			<div class="col-md-7 p-0">
 				<div class="container-fluid">
 					<div class="card">
 						<div class="card-body">
 							<h3 class="card-title text-center text-decoration-underline">2023.11.28</h3>
 							<br>
-							<div class="row d-flex align-items-end justify-content-between">
-								<div class="col-md-3">
-									<div class="btn-group" role="group"
+							<div class="row d-flex align-items-stretch justify-content-between">
+								<div class="col-md-3 pe-1 ps-5">
+									<b>식사종류</b>
+									<div class="btn-group d-flex" role="group"
 										aria-label="Basic radio toggle button group">
 										<input type="radio" class="btn-check" name="btnradio"
 											id="btnradio1" autocomplete="off" checked="checked">
-										<label class="btn btn-outline-primary p-2" for="btnradio1">아침</label>
+										<label class="btn btn-outline-primary p-1" for="btnradio1">아침</label>
 										<input type="radio" class="btn-check" name="btnradio"
 											id="btnradio2" autocomplete="off" checked=""> <label
-											class="btn btn-outline-primary p-2" for="btnradio2">점심</label>
+											class="btn btn-outline-primary p-1" for="btnradio2">점심</label>
 										<input type="radio" class="btn-check" name="btnradio"
 											id="btnradio3" autocomplete="off" checked=""> <label
-											class="btn btn-outline-primary p-2" for="btnradio3">저녁</label>
+											class="btn btn-outline-primary p-1" for="btnradio3">저녁</label>
 										<input type="radio" class="btn-check" name="btnradio"
 											id="btnradio4" autocomplete="off" checked=""> <label
-											class="btn btn-outline-primary p-2" for="btnradio4">간식</label>
+											class="btn btn-outline-primary p-1" for="btnradio4">간식</label>
 									</div>
 								</div>
 								<div class="col-md-4">
@@ -215,6 +187,9 @@ String cp = request.getContextPath();
 									</div>
 								</div>
 								<div class="col-md-2">
+									<div>
+										&nbsp;
+									</div>
 									<button class="btn btn-secondary my-2 my-sm-0" type="submit">저장하기</button>
 								</div>
 							</div>
