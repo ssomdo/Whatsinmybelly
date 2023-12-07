@@ -14,15 +14,15 @@
 	</welcome-file-list>
 
 
-	<servlet>
+	<!-- <servlet>
 		<servlet-name>FileDownloadServlet</servlet-name>
-		<servlet-class>com.yameokja.mc.FileDownloadServlet</servlet-class> <!-- 패키지와 클래스명에 맞게 수정 -->
+		<servlet-class>com.yameokja.mc.FileDownloadServlet</servlet-class> 패키지와 클래스명에 맞게 수정
 	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>FileDownloadServlet</servlet-name>
 		<url-pattern>/download</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping> -->
 
 
 	<servlet>
