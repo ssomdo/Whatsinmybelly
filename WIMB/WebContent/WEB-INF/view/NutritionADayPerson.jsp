@@ -9,12 +9,12 @@ String cp = request.getContextPath();
 <head>
 <meta charset="UTF-8">
 <title>WIMB</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 
-<link href="<%=cp%>/css/bootstrap.min.css" rel="stylesheet"
-	type="text/css" />
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<link href="<%=cp%>/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/js/bootstrap.js"></script>
+
 <style>
 /* 스타일링을 위한 CSS 코드 */
 .calendar {

@@ -9,7 +9,13 @@ String cp = request.getContextPath();
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="css/main.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+
+<link href="<%=cp%>/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="<%=cp%>/js/bootstrap.js"></script>
+
+
 </head>
 <body>
 	<div class="modal fade" id="infoSearchModal" data-bs-backdrop="static"
@@ -18,12 +24,12 @@ String cp = request.getContextPath();
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title" id="staticBackdropLabel">회원정보수정</h4>
+					<h4 class="modal-title" id="staticBackdropLabel">회원정보찾기</h4>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<h5>필수사항</h5>
+					<h5>ID찾기</h5>
 					<div class="form-group">
 						<label class="col-form-label mt-4" for="disabledInput">사용자
 							이름</label> <input type="text" class="form-control" placeholder="사용자이름"
@@ -37,46 +43,41 @@ String cp = request.getContextPath();
 								id="inputDefault" value="010"> - <input type="text"
 								class="form-control" placeholder="" id="inputDefault"> -
 							<input type="text" class="form-control" placeholder=""
-								id="inputDefault" disabled="disabled">&nbsp;
-							<button type="button" class="btn btn-outline-primary btn-sm">✓</button>
+								id="inputDefault">
 						</div>
-						<span><i><small>중복검사를 진행해주세요.</small></i></span>
 					</div>
-					<div class="form-group">
-						<label class="col-form-label mt-4" for="disabledInput">아이디</label>
-						<div class="d-flex align-items-center justify-content-between">
-							<input type="text" class="form-control" placeholder="ID"
-								id="inputDefault" disabled="disabled">&nbsp;
-							<button type="button" class="btn btn-outline-primary btn-sm">✓</button>
-						</div>
-						<span><i><small>중복검사를 진행해주세요.</small></i></span>
-					</div>
-					<div class="form-group">
-						<label for="exampleInputPassword1" class="form-label mt-4">비밀번호</label>
-						<input type="password" class="form-control"
-							id="exampleInputPassword1" placeholder="Password"
-							autocomplete="off">
-					</div>
-					<div class="form-group">
-						<label for="exampleInputPassword1" class="form-label mt-4">비밀번호확인</label>
-						<input type="password" class="form-control"
-							id="exampleInputPassword1" placeholder="Password"
-							autocomplete="off">
+					<div class="modal-footer">
+						<button type="button" id="searchCompleteBtn" class="btn btn-primary">찾기</button>
 					</div>
 					<br>
 					<hr>
-					<h5>선택사항</h5>
+					<h5>PW찾기</h5>
 					<div class="form-group">
-						<label class="col-form-label mt-4" for="inputDefault">사용자
-							설정 일일 총 칼로리</label> <input type="number" class="form-control"
-							placeholder="kcal" id="inputDefault">
+						<label class="col-form-label mt-4" for="inputDefault">아이디</label>
+						<div class="d-flex align-items-center justify-content-between">
+							<input type="text" class="form-control" placeholder="ID"
+								id="inputDefault">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-form-label mt-2" for="disabledInput">전화번호
+						</label>
+						<div class="d-flex align-items-center justify-content-between">
+							<input type="text" class="form-control" placeholder="010"
+								id="inputDefault" value="010"> - <input type="text"
+								class="form-control" placeholder="" id="inputDefault"> -
+							<input type="text" class="form-control" placeholder=""
+								id="inputDefault">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="searchCompleteBtn" class="btn btn-primary">찾기</button>
 					</div>
 					<br> <br>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-bs-dismiss="modal" id="closeSearchModalBtn">취소</button>
-					<button type="button" id="searchCompleteBtn" class="btn btn-primary">수정완료</button>
 				</div>
 			</div>
 		</div>
