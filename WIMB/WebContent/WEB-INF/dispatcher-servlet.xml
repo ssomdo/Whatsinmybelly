@@ -24,7 +24,7 @@
 
 		<property name="dataSource" ref="localDataSource"></property>
 
-		<property name="mapperLocations" value="classpath:com/yameokja/mapper/*.xml"></property>
+		<property name="mapperLocations" value="classpath:com/whatsinmybelly/mapper/*.xml"></property>
 	
 	</bean>
 	
