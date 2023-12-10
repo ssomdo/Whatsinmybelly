@@ -9,12 +9,14 @@ String cp = request.getContextPath();
 <head>
 <meta charset="UTF-8">
 <title>WIMB</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 
-<link href="<%=cp%>/css/bootstrap.min.css" rel="stylesheet"
-	type="text/css" />
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<link href="<%=cp%>/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/js/bootstrap.js"></script>
+
+
+
 <style>
 /* 스타일링을 위한 CSS 코드 */
 .calendar {
@@ -64,6 +66,67 @@ $('#closeSearchModalBtn').on('click', function()
 {
 	$('#infoSearchModal').modal('hide');
 });
+
+
+$(function()
+{
+	window.history.forward(); function noBack()
+	{
+		window.history.forward();
+	}
+	
+	var failValue = "${fail}";
+	
+	// 로그인 실패 후 페이지 로딩시 로그인 실패 문구 출력
+	if(failValue == 'fail')
+	{
+		alert('아이디 혹은 비밀번호를 잘못 입력했습니다.');
+	}
+	
+	// 로그인 실행
+	$('#loginBtn').on('click', function()
+	{
+		if ($("#user_id").val() == "")
+		{
+			alert("아이디를 입력해주세요.");
+			$("#user_id").focus();
+			return;
+		}
+		if ($("#user_pw").val() == "")
+		{
+			alert("비밀번호를 입력해주세요.");
+			$("#user_pw").focus();
+			return;
+		}
+		
+		$("#mainForm").attr("action", "whatsinmybelly/login.action");
+		$("#mainForm").submit();
+		
+	});
+});
+
+
+function enterkey() 
+{
+	if (window.event.keyCode == 13) 
+	{
+		if ($("#user_id").val() == "")
+		{
+			alert("아이디를 입력해주세요.");
+			$("#user_id").focus();
+			return;
+		}
+		if ($("#user_pw").val() == "")
+		{
+			alert("비밀번호를 입력해주세요.");
+			$("#user_pw").focus();
+			return;
+		}
+		
+		$("#mainForm").attr("action", "whatsinmybelly/login.action");
+		$("#mainForm").submit();
+	}
+}
 </script>
 
 </head>
@@ -74,16 +137,16 @@ $('#closeSearchModalBtn').on('click', function()
 				style="max-width: 90px;"></a>
 			<div class="d-flex">
 				<div class="collapse navbar-collapse" id="navbarColor04">
-					<form class="row d-flex justify-content-end">
+					<form class="row d-flex justify-content-end" id="mainForm" method="post">
 						<div class="col-md-7 p-0">
 							<div class="d-flex">
-								<input class="form-control me-sm-2" type="search" placeholder="ID">
-								<input class="form-control me-sm-2" type="search" placeholder="PW">
+								<input class="form-control me-sm-2" type="search" placeholder="ID" id="user_id" name="user_id" onkeyup="enterkey()">
+								<input class="form-control me-sm-2" type="search" placeholder="PW" id="user_pw" name="user_pw" onkeyup="enterkey()">
 							</div>
 						</div>
 						<div class="col-md-4 p-0 me-2">
 							<div class="d-flex">
-								<button class="btn btn-primary my-0 my-sm-0" type="submit">LOGIN</button>
+								<button type="button" class="btn btn-primary my-0 my-sm-0" id="loginBtn">LOGIN</button>
 								<!-- 회원가입 -->						
 								<button type="button" class="btn btn-primary ms-1 my-2 my-sm-0"
 									id="joinBtn" data-bs-toggle="modal"
@@ -223,8 +286,6 @@ $('#closeSearchModalBtn').on('click', function()
 			</div>
 		</div>
 	</div>
-
-
 
 
 </body>

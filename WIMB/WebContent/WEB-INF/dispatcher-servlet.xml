@@ -9,7 +9,7 @@
 						http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 						
 						
-	<context:component-scan base-package="com.yameokja.mc" />
+	<context:component-scan base-package="nutrition.calendar.controller" />
 	
 
 	<bean id="localDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
@@ -24,7 +24,7 @@
 
 		<property name="dataSource" ref="localDataSource"></property>
 
-		<property name="mapperLocations" value="classpath:com/whatsinmybelly/mapper/*.xml"></property>
+		<property name="mapperLocations" value="classpath:nutrition/calendar/mapper/*.xml"></property>
 	
 	</bean>
 	
