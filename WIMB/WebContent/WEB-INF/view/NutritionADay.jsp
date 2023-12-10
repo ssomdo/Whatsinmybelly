@@ -141,7 +141,7 @@ function enterkey()
 						<div class="col-md-7 p-0">
 							<div class="d-flex">
 								<input class="form-control me-sm-2" type="search" placeholder="ID" id="user_id" name="user_id" onkeyup="enterkey()">
-								<input class="form-control me-sm-2" type="search" placeholder="PW" id="user_pw" name="user_pw" onkeyup="enterkey()">
+								<input class="form-control me-sm-2" type="password" placeholder="PW" id="user_pw" name="user_pw" onkeyup="enterkey()">
 							</div>
 						</div>
 						<div class="col-md-4 p-0 me-2">
@@ -163,6 +163,9 @@ function enterkey()
 					</div>
 					<div>
 						<c:import url="info_search_modal.jsp"></c:import>
+					</div>
+					<div>
+						<c:import url="info_searchResult_modal.jsp"></c:import>
 					</div>
 				</div>
 			</div>

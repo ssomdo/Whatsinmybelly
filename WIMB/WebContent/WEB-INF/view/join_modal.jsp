@@ -279,9 +279,6 @@ $(document).ready(function()
 		$("#joinForm").submit();
 		
 	});
-	
-	var styles = window.getComputedStyle(document.querySelector('.Err'));
-    console.log(styles); // 콘솔에 출력
     
 });
 
