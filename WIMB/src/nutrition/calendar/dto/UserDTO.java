@@ -3,7 +3,7 @@ package nutrition.calendar.dto;
 public class UserDTO
 {
 	private String user_name, user_num, user_id, tel, user_pw;
-	private int user_cal;
+	private int user_kcal;
 	
 	
 	public String getUser_name()
@@ -51,13 +51,13 @@ public class UserDTO
 		this.user_pw = user_pw;
 	}
 	
-	public int getUser_cal()
+	public int getUser_kcal()
 	{
-		return user_cal;
+		return user_kcal;
 	}
-	public void setUser_cal(int user_cal)
+	public void setUser_kcal(int user_kcal)
 	{
-		this.user_cal = user_cal;
+		this.user_kcal = user_kcal;
 	}
 	
 	

@@ -26,7 +26,15 @@
 	<!-- 사용자가 설정한 칼로리 등록 -->
 	<insert id="insertCal">
 		INSERT INTO TOTAL_CAL(CAL_NUM, T_CALORIE, USER_NUM)
-		VALUES(CALSEQ.NEXTVAL, #{t_caorie}, #{user_num})
+		VALUES(CALSEQ.NEXTVAL, #{t_calorie}, #{user_num})
 	</insert>
+	
+	<!-- 로그인 확인 -->
+	<select id="login" resultType="java.lang.String">
+		SELECT USER_NUM
+		FROM USER_INFO
+		WHERE USER_ID = #{user_id}
+		 AND CRYPTPACK.DECRYPT(USER_PW, #{user_pw}) = #{user_pw}
+	</select>
 
 </mapper>

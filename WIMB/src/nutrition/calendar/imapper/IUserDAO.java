@@ -15,5 +15,8 @@ public interface IUserDAO
 	public int join(UserDTO user);
 	
 	// 칼로리 등록
-	public int insertCal(@Param("t_calorie")int t_calorie, @Param("user_num")String user_num);
+	public String insertCal(@Param("t_calorie")int t_calorie, @Param("user_num")String user_num);
+	
+	// 로그인 성공 시 유저 번호 가져오기
+	public String login(UserDTO user);
 }

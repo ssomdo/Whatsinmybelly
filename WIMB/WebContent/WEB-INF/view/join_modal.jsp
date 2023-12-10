@@ -20,6 +20,9 @@ String cp = request.getContextPath();
 span.Err
 {
 	display: none;
+	color: red;
+    font-size: small;
+    font-style: italic;
 }
 
 </style>
@@ -224,18 +227,11 @@ $(document).ready(function()
 			return;
 		}
 		else
-			$("#nameErr").css("display", "none"); 
-		if ($("#tel").val() == "")
-		{
-			$("#telErr").html("전화번호를 입력해주세요.");
-			$("#telErr").css("display", "inline");
-			$("#tel2").focus();
-			return;
-		}			
+			$("#nameErr").css("display", "none"); 			
 		if ($("#telAccept").val() == "false")
 		{
-			$("#telError").html("중복확인 버튼을 눌러주세요.");
-			$("#telError").css("display", "inline");
+			$("#telErr").html("중복확인 버튼을 눌러주세요.");
+			$("#telErr").css("display", "inline");
 			$("#telAccept").focus();
 			return;
 		}
@@ -283,6 +279,10 @@ $(document).ready(function()
 		$("#joinForm").submit();
 		
 	});
+	
+	var styles = window.getComputedStyle(document.querySelector('.Err'));
+    console.log(styles); // 콘솔에 출력
+    
 });
 
 
@@ -317,7 +317,7 @@ function checkIfNumeric(tel_num)
 						<label class="col-form-label mt-4" for="user_name">사용자 이름</label>
 						<input type="text" class="form-control" placeholder="사용자이름"
 							id="user_name" name="user_name">
-						<span class="Err" id="nameErr"><i><small>이름을 입력해주세요.</small></i></span>
+						<span class="Err" id="nameErr">이름을 입력해주세요.</span>
 					</div>
 					<div class="form-group">
 						<label class="col-form-label mt-2" for="tel">전화번호</label>
@@ -330,7 +330,7 @@ function checkIfNumeric(tel_num)
 							<button type="button" id="telAccept" class="btn btn-outline-primary btn-sm" value="false">
 								✓</button>
 						</div>
-						<span class="Err" id="telErr"><i><small>중복검사를 진행해주세요.</small></i></span>
+						<span class="Err" id="telErr">중복검사를 진행해주세요.</span>
 						<input type="hidden" name="tel" id="tel">
 					</div>
 					<div class="form-group">
@@ -341,21 +341,21 @@ function checkIfNumeric(tel_num)
 							<button type="button" id="idAccept" class="btn btn-outline-primary btn-sm" value="false">
 								✓</button>
 						</div>
-						<span class="Err" id="idErr"><i><small>중복검사를 진행해주세요.</small></i></span>
+						<span class="Err" id="idErr">중복검사를 진행해주세요.</span>
 					</div>
 					<div class="form-group">
 						<label for="user_pw" class="form-label mt-4">비밀번호</label>
 						<input type="password" class="form-control"
 							id="user_pw" name="user_pw" placeholder="Password"
 							autocomplete="off">
-						<span class="Err" id="pwErr"><i><small>비밀번호를 입력해주세요.</small></i></span>
+						<span class="Err" id="pwErr">비밀번호를 입력해주세요.</span>
 					</div>
 					<div class="form-group">
 						<label for="pwCheck" class="form-label mt-4">비밀번호확인</label>
 						<input type="password" class="form-control"
 							id="pwCheck" placeholder="Password"
 							autocomplete="off">
-						<span class="Err" id="pwCheckErr"><i><small>비밀번호가 일치하지 않습니다.</small></i></span>
+						<span class="Err" id="pwCheckErr">비밀번호가 일치하지 않습니다.</span>
 						<input type="hidden" id="pwCheckVal" value="false">
 					</div>
 					<br>
@@ -364,7 +364,7 @@ function checkIfNumeric(tel_num)
 					<div class="form-group">
 						<label class="col-form-label mt-4" for="inputDefault">사용자
 							설정 일일 총 칼로리</label> <input type="number" class="form-control"
-							placeholder="kcal" id="user_cal">
+							placeholder="kcal" id="user_kcal" name="user_kcal" value="0">
 					</div>
 					<br> <br>
 				</div>
