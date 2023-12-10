@@ -36,5 +36,29 @@
 		WHERE USER_ID = #{user_id}
 		 AND CRYPTPACK.DECRYPT(USER_PW, #{user_pw}) = #{user_pw}
 	</select>
+	
+	<!-- 아이디 찾기 -->
+	<select id="findId" resultType="java.lang.String">
+		SELECT USER_ID
+		FROM USER_INFO
+		WHERE USER_NAME = #{user_name}
+		 AND TEL = #{tel}
+	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<select id="findPw" resultType="java.lang.Integer">
+		SELECT COUNT(USER_PW)
+		FROM USER_INFO
+		WHERE USER_ID = #{user_id}
+		 AND TEL = #{tel}
+	</select>
+	
+	<!-- 비밀번호 초기화 -->
+	<update id="resetPw">
+		UPDATE USER_INFO
+		SET USER_PW = '1234'
+		WHERE USER_ID = #{user_id}
+		 AND TEL = #{tel}
+	</update>
 
 </mapper>

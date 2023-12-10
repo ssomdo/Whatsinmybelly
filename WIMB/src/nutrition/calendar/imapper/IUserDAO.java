@@ -19,4 +19,11 @@ public interface IUserDAO
 	
 	// 로그인 성공 시 유저 번호 가져오기
 	public String login(UserDTO user);
+	
+	// 아이디 찾기
+	public String findId(@Param("user_name")String user_name, @Param("tel")String tel);
+	// 비밀번호 찾기
+	public int findPw(@Param("user_id")String user_id, @Param("tel")String tel);
+	// 비밀번호 초기화
+	public int resetPw(@Param("user_id")String user_id, @Param("tel")String tel);
 }
