@@ -60,5 +60,12 @@
 		WHERE USER_ID = #{user_id}
 		 AND TEL = #{tel}
 	</update>
+	
+	<!-- 유저 이름과 아이디 찾기 -->
+	<select id="findInfo" resultType="nutrition.calendar.dto.UserDTO">
+		SELECT USER_NAME, USER_ID
+		FROM USER_INFO
+		WHERE USER_NUM = #{user_num}
+	</select>
 
 </mapper>

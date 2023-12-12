@@ -15,32 +15,8 @@ String cp = request.getContextPath();
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/js/bootstrap.js"></script>
 
-<style>
-/* 스타일링을 위한 CSS 코드 */
-.calendar {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 600px;
-    height: 440px;
-    margin: 20px auto;
-}
+<link href="<%=cp%>/css/calendar.css" rel="stylesheet" type="text/css" />
 
-.day {
-    width: calc(100% / 7);
-    box-sizing: border-box;
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-}
-
-.prev, .next {
-    cursor: pointer;
-    padding: 8px;
-    background-color: #4CAF50;
-    color: #fff;
-    margin: 10px 0;
-}
-</style>
 
 <script type="text/javascript">
 // 모달 버튼에 이벤트를 건다.  
@@ -75,23 +51,22 @@ $('#closeSearchModalBtn').on('click', function()
 			<div class="d-flex">
 				<div class="collapse navbar-collapse" id="navbarColor04">
 					<form class="row d-flex justify-content-end">
-						<div class="col-md-7 p-0">
+						<div class="col-md-4 p-0">
 							<div class="d-flex">
-								<input class="form-control me-sm-2" type="search" placeholder="ID">
-								<input class="form-control me-sm-2" type="search" placeholder="PW">
+								${user_name }(${user_id })
 							</div>
 						</div>
-						<div class="col-md-4 p-0 me-2">
+						<div class="col-md-7 p-0 me-2">
 							<div class="d-flex">
-								<button class="btn btn-primary my-0 my-sm-0" type="submit">LOGIN</button>
+								<button class="btn btn-primary my-0 my-sm-0" type="submit">정보수정</button>
 								<!-- 회원가입 -->						
 								<button type="button" class="btn btn-primary ms-1 my-2 my-sm-0"
 									id="joinBtn" data-bs-toggle="modal"
-									data-bs-target="#joinModal">JOIN</button>
+									data-bs-target="#joinModal">LOGOUT</button>
 								<!-- 정보수정 -->
-								<button type="button" class="btn btn-primary p-1 ms-1 my-2 my-sm-0"
-									id="infoSearchBtn" data-bs-toggle="modal"
-									data-bs-target="#infoSearchModal"><small>정보찾기</small></button>
+								<!-- <button type="button" class="btn btn-primary p-1 ms-1 my-2 my-sm-0"
+									id="infoModifyBtn" data-bs-toggle="modal"
+									data-bs-target="#infoModifyBtn"><small>정보수정</small></button> -->
 							</div>
 						</div>
 					</form>
@@ -99,7 +74,7 @@ $('#closeSearchModalBtn').on('click', function()
 						<c:import url="join_modal.jsp"></c:import>
 					</div>
 					<div>
-						<c:import url="info_search_modal.jsp"></c:import>
+						<c:import url="info_modify_modal.jsp"></c:import>
 					</div>
 				</div>
 			</div>
@@ -117,7 +92,7 @@ $('#closeSearchModalBtn').on('click', function()
 			<div class="col-md-5 p-0">
 				<div class="container-fluid">
 					<div class="card mb-3">
-						<h3 class="card-header">2023.11</h3>
+						<h3 class="card-header">${cal.month }월</h3>
 						<div class="card-body p-2">
 							<h5 class="card-title">한달 하루 영양 달력</h5>
 							<h6 class="card-subtitle text-muted">날짜를 클릭하여 하루를 채우고
@@ -126,13 +101,31 @@ $('#closeSearchModalBtn').on('click', function()
 						<div class="card-body p-0">
 							<!-- 달력자리 -->
 							<div class="calendar">
-								<c:forEach var="day" begin="1" end="3" step="1">
+								<div class="day">일</div>
+								<div class="day">월</div>
+								<div class="day">화</div>
+								<div class="day">수</div>
+								<div class="day">목</div>
+								<div class="day">금</div>
+								<div class="day">토</div>
+								<c:forEach var="day" begin="1" end="${cal.start_date }" step="1">
 									<div class="day"></div>
 								</c:forEach>
-								<c:forEach var="day" begin="1" end="30" step="1">
-									<div class="day">${day}</div>
+								<c:forEach var="day" begin="1" end="${cal.end_day }" step="1">
+									<div class="day">
+									<c:set var="select_day" value="${cal.select_day}"/>
+									<%-- <c:out value="${day} vs ${select_day}"/> --%>
+									<c:choose>
+										<c:when test="${day eq select_day}">
+												<button type="button" class="rounded-circle"></button>
+										</c:when>
+										<c:otherwise>
+												<button type="button" class="rounded-circle">${day}</button>
+										</c:otherwise>
+									</c:choose>
+									</div>
 								</c:forEach>
-								<c:forEach var="day" begin="1" end="2" step="1">
+								<c:forEach var="day" begin="1" end="${cal.end_date }" step="1">
 									<div class="day"></div>
 								</c:forEach>
 							</div>

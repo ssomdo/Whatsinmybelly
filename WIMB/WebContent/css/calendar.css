@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+.calendar
+{
+	display: flex;
+    flex-wrap: wrap;
+    max-width: 600px;
+    height: 440px;
+    margin: 20px auto;
+}
+
+.day
+{
+    width: calc(100% / 7);
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.prev, .next
+{
+    cursor: pointer;
+    padding: 8px;
+    background-color: #4CAF50;
+    color: #fff;
+    margin: 10px 0;
+}
+
+.day .unselect
+{
+	background: none;
+	border
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
+	font-size: 9pt;
+}
+
+.day .select
+{
+	background-color: #FF6347;
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
+	font-size: 9pt;
+	color: white;
+}
