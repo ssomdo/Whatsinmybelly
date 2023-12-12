@@ -1,5 +1,7 @@
 package nutrition.calendar.controller;
 
+import java.time.LocalDate;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -12,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import nutrition.calendar.dto.MonthDTO;
 import nutrition.calendar.dto.UserDTO;
 import nutrition.calendar.imapper.IUserDAO;
 import nutrition.calendar.mth.MakeNum;
+import nutrition.calendar.mth.ShowCalendar;
 
 
 @Controller
@@ -98,8 +102,39 @@ public class MainCon
 	// 로그인 후 정보가 담긴 페이지로 이동
 	@RequestMapping(value="/whatsinmybelly/user.action", method=RequestMethod.GET)
 	public String userPage(HttpServletRequest request, Model model)
-	{		
+	{
+		HttpSession session = request.getSession();
+		
 		String result = "/WEB-INF/view/NutritionADayPerson.jsp";
+		
+		ShowCalendar sc = new ShowCalendar();
+		IUserDAO udao = sqlSesion.getMapper(IUserDAO.class);
+		
+		String user_num = (String)session.getAttribute("user_num");
+		
+		// 세션에 설정되어 있는 사용자 번호로 사용자 이름과 아이디 찾기
+		UserDTO udto = udao.findInfo(user_num);
+		
+		// 사용자 이름과 아이디 model 활용하여 전송
+		model.addAttribute("user_name", udto.getUser_name());
+		model.addAttribute("user_id", udto.getUser_id());
+		
+		// 달력 구성하기 위해 정보 가져오기
+		LocalDate currentDate = LocalDate.now();
+		// 현재의 연, 월 가져오기
+		int yearValue = currentDate.getYear();
+        int monthValue = currentDate.getMonthValue();
+        int dayValue = currentDate.getDayOfMonth();
+        
+        MonthDTO mdto = new MonthDTO();
+        mdto.setYear(yearValue);
+        mdto.setMonth(monthValue);
+        mdto.setSelect_day(dayValue);
+        
+        MonthDTO cal = sc.calCalendar(mdto);
+        
+        model.addAttribute("cal", cal);
+		
         
         return result;
 	}

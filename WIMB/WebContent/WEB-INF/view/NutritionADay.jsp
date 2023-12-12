@@ -15,34 +15,8 @@ String cp = request.getContextPath();
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/js/bootstrap.js"></script>
 
+<link href="<%=cp%>/css/calendar.css" rel="stylesheet" type="text/css" />
 
-
-<style>
-/* 스타일링을 위한 CSS 코드 */
-.calendar {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 600px;
-    height: 440px;
-    margin: 20px auto;
-}
-
-.day {
-    width: calc(100% / 7);
-    box-sizing: border-box;
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-}
-
-.prev, .next {
-    cursor: pointer;
-    padding: 8px;
-    background-color: #4CAF50;
-    color: #fff;
-    margin: 10px 0;
-}
-</style>
 
 <script type="text/javascript">
 // 모달 버튼에 이벤트를 건다.  
@@ -192,11 +166,27 @@ function enterkey()
 						<div class="card-body p-0">
 							<!-- 달력자리 -->
 							<div class="calendar">
+								<div class="day">일</div>
+								<div class="day">월</div>
+								<div class="day">화</div>
+								<div class="day">수</div>
+								<div class="day">목</div>
+								<div class="day">금</div>
+								<div class="day">토</div>
 								<c:forEach var="day" begin="1" end="3" step="1">
 									<div class="day"></div>
 								</c:forEach>
 								<c:forEach var="day" begin="1" end="30" step="1">
-									<div class="day">${day}</div>
+									<div class="day">
+									<c:choose>
+										<c:when test="${day eq 28}">
+												<button type="button" class="select">${day}</button>
+										</c:when>
+										<c:otherwise>
+												<button type="button" class="unselect">${day}</button>
+										</c:otherwise>
+									</c:choose>
+									</div>
 								</c:forEach>
 								<c:forEach var="day" begin="1" end="2" step="1">
 									<div class="day"></div>

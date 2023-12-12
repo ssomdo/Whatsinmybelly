@@ -1,5 +1,7 @@
 package nutrition.calendar.imapper;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.annotations.Param;
 
 import nutrition.calendar.dto.UserDTO;
@@ -26,4 +28,7 @@ public interface IUserDAO
 	public int findPw(@Param("user_id")String user_id, @Param("tel")String tel);
 	// 비밀번호 초기화
 	public int resetPw(@Param("user_id")String user_id, @Param("tel")String tel);
+	
+	// 설정된 세션으로 유저 이름과 아이디 찾기
+	public UserDTO findInfo(String user_num);
 }
