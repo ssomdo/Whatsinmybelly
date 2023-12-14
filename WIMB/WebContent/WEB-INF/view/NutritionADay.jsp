@@ -181,9 +181,27 @@ function enterkey()
 									<c:choose>
 										<c:when test="${day eq 28}">
 												<button type="button" class="select">${day}</button>
+												<span>200kcal</span>
+										</c:when>
+										<c:when test="${day % 8 eq 0}">
+												<button type="button" class="unselect">${day}</button>
+												<span>1050kcal</span>
+										</c:when>
+										<c:when test="${day % 7 eq 0}">
+												<button type="button" class="unselect">${day}</button>
+												<span>870kcal</span>
+										</c:when>
+										<c:when test="${day % 5 eq 0}">
+												<button type="button" class="unselect">${day}</button>
+												<span>930kcal</span>
+										</c:when>
+										<c:when test="${day % 9 eq 0}">
+												<button type="button" class="unselect">${day}</button>
+												<span>370kcal</span>
 										</c:when>
 										<c:otherwise>
 												<button type="button" class="unselect">${day}</button>
+												<span>0kcal</span>
 										</c:otherwise>
 									</c:choose>
 									</div>
@@ -207,18 +225,18 @@ function enterkey()
 									<b>식사종류</b>
 									<div class="btn-group d-flex" role="group"
 										aria-label="Basic radio toggle button group">
-										<input type="radio" class="btn-check" name="btnradio"
-											id="btnradio1" autocomplete="off" checked="checked">
-										<label class="btn btn-outline-primary p-1" for="btnradio1">아침</label>
-										<input type="radio" class="btn-check" name="btnradio"
-											id="btnradio2" autocomplete="off" checked=""> <label
-											class="btn btn-outline-primary p-1" for="btnradio2">점심</label>
-										<input type="radio" class="btn-check" name="btnradio"
-											id="btnradio3" autocomplete="off" checked=""> <label
-											class="btn btn-outline-primary p-1" for="btnradio3">저녁</label>
-										<input type="radio" class="btn-check" name="btnradio"
-											id="btnradio4" autocomplete="off" checked=""> <label
-											class="btn btn-outline-primary p-1" for="btnradio4">간식</label>
+										<input type="radio" class="btn-check" name="breakfast"
+											id="breakfast" autocomplete="off">
+										<label class="btn btn-outline-primary p-1" for="breakfast">아침</label>
+										<input type="radio" class="btn-check" name="lunch"
+											id="lunch" autocomplete="off"> <label
+											class="btn btn-outline-primary p-1" for="lunch">점심</label>
+										<input type="radio" class="btn-check" name="dinner"
+											id="dinner" autocomplete="off"> <label
+											class="btn btn-outline-primary p-1" for="dinner">저녁</label>
+										<input type="radio" class="btn-check" name="snack"
+											id="snack" autocomplete="off"> <label
+											class="btn btn-outline-primary p-1" for="snack">간식</label>
 									</div>
 								</div>
 								<div class="col-md-4">
