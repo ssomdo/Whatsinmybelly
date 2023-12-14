@@ -70,6 +70,11 @@ $(function()
 	        });
 	    }, doneTypingInterval);
 	});
+	
+	$("#logoutBtn").click(function()
+	{
+		window.location.href = "logout.action";
+	});
 });
 
 function recomList(recom)
@@ -82,7 +87,7 @@ function recomList(recom)
 	for (var i = 0; i < recomArray.length; i++)
 	{
 		document.getElementById("items").innerHTML
-		+= "<div class='item'>"+recomArray[i]+"</div>";
+		+= "<div class='item'><button type='button' value='"+recomArray[i]+"' class='recomMenu'>"+recomArray[i]+"</button></div>";
 	}
 	
 	document.getElementById("list").style.display = "inline";
