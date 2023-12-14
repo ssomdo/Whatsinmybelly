@@ -18,7 +18,7 @@ String cp = request.getContextPath();
 
 </head>
 <body>
-	<div class="modal fade" id="infoSearchModal" data-bs-backdrop="static"
+	<div class="modal fade" id="infoModifyModal" data-bs-backdrop="static"
 		data-bs-keyboard="false" tabindex="-1"
 		aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -33,38 +33,42 @@ String cp = request.getContextPath();
 					<div class="form-group">
 						<label class="col-form-label mt-4" for="disabledInput">사용자
 							이름</label> <input type="text" class="form-control" placeholder="사용자이름"
-							id="inputDefault" disabled="disabled">
+							id="user_name" disabled="disabled">
 					</div>
 					<div class="form-group">
 						<label class="col-form-label mt-2" for="disabledInput">전화번호
 						</label>
 						<div class="d-flex align-items-center justify-content-between">
 							<input type="text" class="form-control" placeholder="010"
-								id="inputDefault" value="010"> - <input type="text"
-								class="form-control" placeholder="" id="inputDefault"> -
+								id="tel1" value="010"> - <input type="text"
+								class="form-control" placeholder="" id="tel2"> -
 							<input type="text" class="form-control" placeholder=""
-								id="inputDefault" disabled="disabled">&nbsp;
+								id="tel3" disabled="disabled">&nbsp;
 							<button type="button" class="btn btn-outline-primary btn-sm">✓</button>
 						</div>
-						<span><i><small>중복검사를 진행해주세요.</small></i></span>
 					</div>
 					<div class="form-group">
 						<label class="col-form-label mt-4" for="disabledInput">아이디</label>
 						<div class="d-flex align-items-center justify-content-between">
-							<input type="text" class="form-control" placeholder="ID"
-								id="inputDefault" disabled="disabled">&nbsp;
+							<input type="text" class="form-control" placeholder=""
+								id="user_id" disabled="disabled">&nbsp;
 							<button type="button" class="btn btn-outline-primary btn-sm">✓</button>
 						</div>
-						<span><i><small>중복검사를 진행해주세요.</small></i></span>
 					</div>
 					<div class="form-group">
-						<label for="exampleInputPassword1" class="form-label mt-4">비밀번호</label>
+						<label for="exampleInputPassword1" class="form-label mt-4">기존 비밀번호</label>
 						<input type="password" class="form-control"
 							id="exampleInputPassword1" placeholder="Password"
 							autocomplete="off">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputPassword1" class="form-label mt-4">비밀번호확인</label>
+						<label for="exampleInputPassword1" class="form-label mt-4">새로운 비밀번호</label>
+						<input type="password" class="form-control"
+							id="exampleInputPassword1" placeholder="Password"
+							autocomplete="off">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputPassword1" class="form-label mt-4">새로운 비밀번호확인</label>
 						<input type="password" class="form-control"
 							id="exampleInputPassword1" placeholder="Password"
 							autocomplete="off">
@@ -81,7 +85,7 @@ String cp = request.getContextPath();
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal" id="closeSearchModalBtn">취소</button>
+						data-bs-dismiss="modal" id="closeModifyModalBtn">취소</button>
 					<button type="button" id="searchCompleteBtn" class="btn btn-primary">수정완료</button>
 				</div>
 			</div>

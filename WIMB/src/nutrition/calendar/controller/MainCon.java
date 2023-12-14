@@ -1,11 +1,14 @@
 package nutrition.calendar.controller;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import nutrition.calendar.dto.MonthDTO;
+import nutrition.calendar.dto.TotalKcalDTO;
 import nutrition.calendar.dto.UserDTO;
 import nutrition.calendar.imapper.IUserDAO;
+import nutrition.calendar.mth.GetApi;
 import nutrition.calendar.mth.MakeNum;
 import nutrition.calendar.mth.ShowCalendar;
 
@@ -133,10 +138,56 @@ public class MainCon
         
         MonthDTO cal = sc.calCalendar(mdto);
         
+        // 달력 생성에 필요한 정보 모델 통하여 전송
         model.addAttribute("cal", cal);
+       
+        // 사용자가 이전에 등록한 요일별 총 칼로리 모델 통하여 전송
+        ArrayList<TotalKcalDTO> tklist = new ArrayList<TotalKcalDTO>();
+        
+        for (int i=0; i<cal.getEnd_day(); i++)
+        {
+        	String day = "";
+        	
+        	TotalKcalDTO tkdto = new TotalKcalDTO();
+        	
+        	tkdto.setDay(i);
+        	
+        	if (i<10)
+        		day = mdto.getYear() + "-" + mdto.getMonth() + "-0" + i;
+        	else
+        		day = mdto.getYear() + "-" + mdto.getMonth() + "-" + i;
+        	tkdto.setKcal(udao.getKcal(user_num, day));
+        	
+        	tklist.add(tkdto);
+        }
+        
+        model.addAttribute("tklist", tklist);
 		
         
         return result;
+	}
+	
+	// 검색어 추천 기능
+	@RequestMapping(value="/whatsinmybelly/foodsearch.action", method=RequestMethod.POST)
+		@ResponseBody
+	public String searchMenu(@RequestParam("name") String name)
+	{
+		
+		String result = "";
+		
+		GetApi ga = new GetApi();
+		
+		try
+		{
+			result += "{\"list\":\""+ga.recomMenu(name)+"\"}";
+			
+		} catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 }

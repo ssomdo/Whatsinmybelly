@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Param;
 
+import nutrition.calendar.dto.TotalKcalDTO;
 import nutrition.calendar.dto.UserDTO;
 
 public interface IUserDAO
@@ -31,4 +32,7 @@ public interface IUserDAO
 	
 	// 설정된 세션으로 유저 이름과 아이디 찾기
 	public UserDTO findInfo(String user_num);
+	
+	// 유저의 요일별 총 칼로리 가져오기
+	public int getKcal(@Param("user_num")String user_num, @Param("day")String day);
 }
