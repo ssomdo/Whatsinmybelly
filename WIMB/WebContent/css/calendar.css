@@ -40,7 +40,6 @@
 .day .unselect
 {
 	background: none;
-	border
 	height: 30px;
 	width: 30px;
 	border-radius: 50%;
@@ -64,17 +63,6 @@
   }
 }
 
-/* #list
-{
-	border: 1px solid gray;
-	width: 500px;
-	
-	position: absolute;
-	left: 70px;
-	top: 164.5px;
-	
-	display: none;
-} */
 #list .item
 {
 	padding: 3px;
@@ -84,4 +72,10 @@
 	background-color: white;
 	font-size: 8pt;
 	display: none;
+}
+
+.recomMenu
+{
+	background: none;
+	border: none;
 }

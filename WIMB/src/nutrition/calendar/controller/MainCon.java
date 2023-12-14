@@ -189,5 +189,19 @@ public class MainCon
 		
 		return result;
 	}
+	
+	@RequestMapping(value="/whatsinmybelly/logout.action", method = {RequestMethod.GET})	
+	public String logout(HttpServletRequest requset)
+	{
+		HttpSession session = requset.getSession();
+		
+		String result = "";
+		
+		session.removeAttribute("user_num");
+		
+		result = "redirect:/whatsinmybelly.action";
+		
+		return result;
+	}
 
 }
