@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="nutrition.calendar.imapper.IKcalDAO">
+
+	<!-- 등록된 요일별 총칼로리 가져오기 -->
+	<select id="getKcal" resultType="java.lang.Integer">
+		SELECT NVL(SUM(M.MENU_CAL), 0) AS KCAL
+		FROM NUTRITION N LEFT JOIN MENU M
+		ON N.MENU_NUM = M.MENU_NUM
+		WHERE N.USER_NUM = #{user_num}
+		 AND TO_CHAR(N.REG_DATE, 'YYYY-MM-DD') = #{day}
+	</select>
+	
+	<!-- 식사 고유 번호 가져오기 -->
+	<select id="getMealNum" resultType="java.lang.Integer">
+		SELECT MEAL_NUM
+		FROM MEAL_TIME
+		WHERE MEAL_NAME = #{meal}
+	</select>
+	
+	<!-- 식단 테이블에 존재하는 식단인지 확인 -->
+	<select id="checkMenu" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM MENU
+		WHERE MENU_NUM = #{menu_num}
+	</select>
+	
+	<!--  -->
+	<insert id="">
+		INSERT INTO MENU(MENU_NUM, MENU_NAME, MENU_SIZE, CAL_UNIT, MENU_CAL)
+		VALUES ()
+	</insert>
+
+</mapper>

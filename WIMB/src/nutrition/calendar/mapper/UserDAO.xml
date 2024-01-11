@@ -67,14 +67,5 @@
 		FROM USER_INFO
 		WHERE USER_NUM = #{user_num}
 	</select>
-	
-	<!-- 등록된 요일별 총칼로리 가져오기 -->
-	<select id="getKcal" resultType="java.lang.Integer">
-		SELECT NVL(SUM(M.MENU_CAL), 0) AS KCAL
-		FROM NUTRITION N LEFT JOIN MENU M
-		ON N.MENU_NUM = M.MENU_NUM
-		WHERE N.USER_NUM = #{user_num}
-		 AND TO_CHAR(N.REG_DATE, 'YYYY-MM-DD') = #{day}
-	</select>
 
 </mapper>

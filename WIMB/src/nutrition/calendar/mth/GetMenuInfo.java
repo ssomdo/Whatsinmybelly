@@ -15,9 +15,11 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class GetApi
+import nutrition.calendar.dto.MenuDTO;
+
+public class GetMenuInfo
 {
-	public HashMap<String, List<String>> recomMenu(String name) throws IOException, ParseException
+	public MenuDTO searchMenu(String num) throws IOException, ParseException
 	{
 		// URL을 만들기 위한 StringBuilder.
 		StringBuilder urlBuilder = new StringBuilder("http://openapi.foodsafetykorea.go.kr/api"); /*URL : keyId/serviceId/dataType/startIdx/endIdx*/
@@ -30,7 +32,7 @@ public class GetApi
         urlBuilder.append("/" + URLEncoder.encode("1","UTF-8"));
         urlBuilder.append("/" + URLEncoder.encode("5","UTF-8"));
         // 검색 하기 위하여 추가 입력
-        urlBuilder.append("/" + URLEncoder.encode("DESC_KOR","UTF-8") + "=" + URLEncoder.encode(name, "UTF-8")); /*식품 이름*/
+        urlBuilder.append("/" + URLEncoder.encode("NUM","UTF-8") + "=" + URLEncoder.encode(num, "UTF-8")); /*식품 이름*/
         
         // URL 객체 생성.
         URL url = new URL(urlBuilder.toString());
@@ -70,19 +72,12 @@ public class GetApi
         JSONObject iObj = (JSONObject)obj.get("I2790");
         JSONArray dataArr = (JSONArray)iObj.get("row");
         
-        HashMap<String, List<String>> sb2 = new HashMap<String, List<String>>();
-        for (int i=0; i<dataArr.size(); i++)
-        {
-        	List<String> value = new ArrayList<String>();
-        	
-        	JSONObject tObj = (JSONObject)dataArr.get(i);
-        	value.add((String)tObj.get("DESC_KOR"));
-        	value.add((String)tObj.get("NUTR_CONT1"));
-        	value.add((String)tObj.get("SERVING_SIZE"));
-        	
-        	sb2.put((String)tObj.get("NUM"), value);
-        	
-        }
+        MenuDTO md = new MenuDTO();
+        
+    	JSONObject tObj = (JSONObject)dataArr.get(i);
+    	value.add((String)tObj.get("DESC_KOR"));
+    	value.add((String)tObj.get("NUTR_CONT1"));
+    	value.add((String)tObj.get("SERVING_SIZE"));
         
         return sb2;
     }

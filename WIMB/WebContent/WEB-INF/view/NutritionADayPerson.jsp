@@ -31,16 +31,27 @@ $('#closeModifyModalBtn').on('click', function()
 });
 
 $(function()
-{	
+{
+	var typingTimer;
+	var doneTypingInterval = 150;  
+	
 	$("#foodSearch").keyup(function()
 	{
-		var typingTimer;
-		var doneTypingInterval = 200;  // 300 밀리초
-		
 		clearTimeout(typingTimer);
-	    typingTimer = setTimeout(function() 
+	    typingTimer = setTimeout(function()
 	    {
-	        var name = $("#foodSearch").val();
+			if ($("#foodKcal").val() != null || $("#foodKcal").val() != "")
+			{
+				$("#foodKcal").val("");
+				$("#foodSize").val("");
+				$("#save").val("");
+			}
+			var name = $("#foodSearch").val();
+		        
+	        if (name == "")
+	        {
+	        	$("#items").empty();
+	        }
 			
 			// 입력된 검색어가 한글 완성형일 경우에만 검색 키워드를 구성하여 전송할 수 있도록 처리
 			// → 정규표현식 사용
@@ -60,15 +71,88 @@ $(function()
 	            , dataType: "json"
 	            ,success: function (data)
 	            {
-	            	if (data.list != null)
-	            		recomList(data.list);
+	            	if (data.num != null)
+	            		recomList(data.num, data.name, data.kcal, data.size);
+	            	
 	            },
 	            error: function (error) {
-	                // Ajax 요청 실패 시 처리
 	                console.error("Ajax Error: ", error);
 	            }
-	        });
+	       	});
 	    }, doneTypingInterval);
+	});
+	
+	$(document).on('click', '.recomMenu', function()
+	{
+		var f_num = $(this).attr('id');
+		var f_name = $(this).html();
+		var f_kcal = $(this).val();
+		var f_size = $('.'+f_num).val();
+		
+		$("#foodSearch").val(f_name);
+		$("#foodKcal").val(f_kcal);
+		$("#ogFoodSize").val(f_size);
+		$("#foodSize").val(f_size);
+		$("#save").val(f_num);
+		
+		$("#items").empty();
+	});
+	
+	$("#chSize").on("change", function()
+	{
+		if ($(this).prop("checked"))
+		{
+	        console.log("선택됨");
+	        $("#foodSize" ).attr("disabled", false);
+	    }
+	    else
+	    {
+	        console.log("선택되지않음");
+	        $("#foodSize").attr("disabled", true);
+	    }
+	});
+	
+	$("#save").click(function()
+	{		
+		var meal_id = $('input[name="meal"]:checked').attr('id');
+		var meal = $('label[for="' + meal_id + '"]').text();
+		var f_num = $("#save").val();
+		var f_name = $("#foodSearch").val();
+		var f_kcal = $("#foodKcal").val();
+		var f_ogSize = $("#ogFoodSize").val();
+		var f_size = $("#foodSize").val();
+		
+		
+		$.ajax(
+		{
+			type: "POST"
+            ,url: "kcalinsert.action"
+            ,data: {
+            	"meal":meal,
+            	"f_num":f_num,
+            	"f_name":f_name,
+            	"f_kcal":f_kcal,
+            	"f_ogSize":f_ogSize,
+            	"f_size":f_size
+            	}
+            , dataType: "json"
+            ,success: function (data)
+            {
+            	if (data.check == 1)
+            	{
+            		$("#kcalT tbody").append("<tr></tr>");
+                	$("#kcalT tbody tr:last").append("<td>"+meal+"</td>");
+                	$("#kcalT tbody tr:last").append("<td>"+f_name+"</td>");
+                	$("#kcalT tbody tr:last").append("<td>"+f_kcal+"</td>");
+                	$("#kcalT tbody tr:last").append("<td>"+f_size+"</td>");
+            		
+            	}
+            	
+            },
+            error: function (error) {
+                console.error("Ajax Error: ", error);
+            }
+       	});
 	});
 	
 	$("#logoutBtn").click(function()
@@ -77,17 +161,20 @@ $(function()
 	});
 });
 
-function recomList(recom)
+function recomList(numList, nameList, kcalList, sizeList)
 {
-	var recomArray = recom.slice(0, -1).split(',');
+	var numArray = numList.slice(0, -1).split(',');
+	var nameArray = nameList.slice(0, -1).split(',');
+	var kcalArray = kcalList.slice(0, -1).split(',');
+	var sizeArray = sizeList.slice(0, -1).split(',');
 	
 	document.getElementById("items").innerHTML= "";
 	
 	// 추천 검색어를 동적으로 리스트에 추가
-	for (var i = 0; i < recomArray.length; i++)
+	for (var i = 0; i < numArray.length; i++)
 	{
-		document.getElementById("items").innerHTML
-		+= "<div class='item'><button type='button' value='"+recomArray[i]+"' class='recomMenu'>"+recomArray[i]+"</button></div>";
+		document.getElementById("items").innerHTML += "<div class='item'><button type='button' id='"+numArray[i]+"' value='"+kcalArray[i]+"' class='recomMenu'>"+nameArray[i]+"</button>";
+		document.getElementById("items").innerHTML += "<input type='hidden' class='"+numArray[i]+"' value='"+sizeArray[i]+"'></div>";
 	}
 	
 	document.getElementById("list").style.display = "inline";
@@ -192,17 +279,17 @@ function recomList(recom)
 									<b>식사종류</b>
 									<div class="btn-group d-flex" role="group"
 										aria-label="Basic radio toggle button group">
-										<input type="radio" class="btn-check" name="breakfast"
-											id="btnradio1" autocomplete="off">
+										<input type="radio" class="btn-check" name="meal"
+											id="breakfast" autocomplete="off">
 										<label class="btn btn-outline-primary p-1" for="breakfast">아침</label>
-										<input type="radio" class="btn-check" name="lunch"
-											id="btnradio2" autocomplete="off"> <label
+										<input type="radio" class="btn-check" name="meal"
+											id="lunch" autocomplete="off"> <label
 											class="btn btn-outline-primary p-1" for="lunch">점심</label>
-										<input type="radio" class="btn-check" name="dinner"
-											id="btnradio3" autocomplete="off"> <label
+										<input type="radio" class="btn-check" name="meal"
+											id="dinner" autocomplete="off"> <label
 											class="btn btn-outline-primary p-1" for="dinner">저녁</label>
-										<input type="radio" class="btn-check" name="snack"
-											id="btnradio4" autocomplete="off"> <label
+										<input type="radio" class="btn-check" name="meal"
+											id="snack" autocomplete="off"> <label
 											class="btn btn-outline-primary p-1" for="snack">간식</label>
 									</div>
 								</div>
@@ -211,7 +298,8 @@ function recomList(recom)
 									<div class="d-flex">
 										<input class="form-control me-sm-2" type="text"
 											placeholder="음식명 입력란" id="foodSearch">
-										<button class="btn btn-primary my-2 my-sm-0" type="button">Search</button>
+										<input class="form-control me-sm-2" type="text"
+											placeholder="음식 칼로리" id="foodKcal">
 									</div>
 									<div id="list">
 										<div id="items">
@@ -222,25 +310,26 @@ function recomList(recom)
 									<div class="d-flex">
 										<div class="form-check form-switch">
 											<input class="form-check-input" type="checkbox"
-												id="flexSwitchCheckDefault">
+												id="chSize">
 										</div> &nbsp;
 										<b>음식량</b><i>(선택사항)</i> 
 									</div>
 									<div class="d-flex">
 										<input class="form-control me-sm-2" type="text"
-											placeholder="음식량 입력란">
+											placeholder="기준 음식량" id="foodSize" disabled="disabled">
+										<input type="hidden" id="ogFoodSize">
 									</div>
 								</div>
 								<div class="col-md-2">
 									<div>
 										&nbsp;
 									</div>
-									<button class="btn btn-secondary my-2 my-sm-0" type="submit">저장하기</button>
+									<button class="btn btn-secondary my-2 my-sm-0" type="submit" id="save">저장하기</button>
 								</div>
 							</div>
 							<br>
 							<hr>
-							<table class="table table-hover text-center">
+							<table class="table table-hover text-center" id="kcalT">
 								<thead>
 									<tr>
 										<th scope="col">끼니</th>

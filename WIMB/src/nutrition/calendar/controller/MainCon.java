@@ -1,14 +1,16 @@
 package nutrition.calendar.controller;
 
-import java.io.IOException;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import nutrition.calendar.dto.MonthDTO;
 import nutrition.calendar.dto.TotalKcalDTO;
 import nutrition.calendar.dto.UserDTO;
+import nutrition.calendar.imapper.IKcalDAO;
 import nutrition.calendar.imapper.IUserDAO;
 import nutrition.calendar.mth.GetApi;
 import nutrition.calendar.mth.MakeNum;
@@ -114,6 +117,7 @@ public class MainCon
 		
 		ShowCalendar sc = new ShowCalendar();
 		IUserDAO udao = sqlSesion.getMapper(IUserDAO.class);
+		IKcalDAO kdao = sqlSesion.getMapper(IKcalDAO.class);
 		
 		String user_num = (String)session.getAttribute("user_num");
 		
@@ -144,7 +148,7 @@ public class MainCon
         // 사용자가 이전에 등록한 요일별 총 칼로리 모델 통하여 전송
         ArrayList<TotalKcalDTO> tklist = new ArrayList<TotalKcalDTO>();
         
-        for (int i=0; i<cal.getEnd_day(); i++)
+        for (int i=1; i<=cal.getEnd_day(); i++)
         {
         	String day = "";
         	
@@ -156,7 +160,7 @@ public class MainCon
         		day = mdto.getYear() + "-" + mdto.getMonth() + "-0" + i;
         	else
         		day = mdto.getYear() + "-" + mdto.getMonth() + "-" + i;
-        	tkdto.setKcal(udao.getKcal(user_num, day));
+        	tkdto.setKcal(kdao.getKcal(user_num, day));
         	
         	tklist.add(tkdto);
         }
@@ -179,17 +183,65 @@ public class MainCon
 		
 		try
 		{
-			result += "{\"list\":\""+ga.recomMenu(name)+"\"}";
+			HashMap<String, List<String>> hm = ga.recomMenu(name);
+			Set<String> keySet = hm.keySet();
 			
-		} catch (Exception e)
+			String f_num = "";
+			String f_name = "";
+			String f_kcal = "";
+			String f_size = "";
+			
+			for (String key : keySet)
+			{
+				List<String> f_list = hm.get(key);
+				
+				f_num += key + ",";
+				f_name += f_list.get(0) + ",";
+				f_kcal += f_list.get(1) + ",";
+				f_size += f_list.get(2) + ",";
+			}
+			
+			result += "{\"num\":\""+f_num+"\",";
+			result += "\"name\":\""+f_name+"\"," ;
+			result += "\"kcal\":\""+f_kcal+"\",";
+			result += "\"size\":\""+f_size+"\"}";
+			
+		}
+		catch (Exception e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return result;
 	}
 	
+	// 식단 등록 기능
+	@RequestMapping(value="/whatsinmybelly/kcalinsert.action", method=RequestMethod.POST)
+		@ResponseBody
+	public String kcalInsert(@RequestParam("meal") String meal, @RequestParam("f_num") String f_num, @RequestParam("f_name") String f_name,
+			@RequestParam("f_kcal") String f_kcal, @RequestParam("f_ogSize") String f_ogSize, @RequestParam("f_size") String f_size)
+	{
+		String result = "";
+		
+		IKcalDAO kdao = sqlSesion.getMapper(IKcalDAO.class);
+		
+		int meal_num = kdao.getMealNum(meal);
+		
+		int check_nu = kdao.checkMenu(Integer.parseInt(f_num));
+		
+		if (check_nu == 0)
+			
+		
+		
+		
+		
+		
+		
+		
+		return result;
+	}
+	
+	// 로그아웃 기능
 	@RequestMapping(value="/whatsinmybelly/logout.action", method = {RequestMethod.GET})	
 	public String logout(HttpServletRequest requset)
 	{
